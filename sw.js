@@ -1,5 +1,5 @@
 // Service worker – offline provoz. Při změně souborů zvyš verzi.
-const VERSION = 'karticky-v1';
+const VERSION = 'karticky-v3';
 const FILES = [
   './',
   'index.html',
@@ -29,17 +29,18 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Nejdřív cache (funguje offline), na pozadí stáhne novou verzi.
+// Nejdřív síť (vždy nejnovější verze), bez připojení se použije uložená kopie.
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.open(VERSION).then(cache =>
-      cache.match(event.request, { ignoreSearch: true }).then(cached => {
-        const network = fetch(event.request)
-          .then(res => { if (res.ok) cache.put(event.request, res.clone()); return res; })
-          .catch(() => cached);
-        return cached || network;
+    fetch(event.request, { cache: 'no-cache' })
+      .then(res => {
+        if (res.ok) {
+          const copy = res.clone();
+          caches.open(VERSION).then(cache => cache.put(event.request, copy));
+        }
+        return res;
       })
-    )
+      .catch(() => caches.match(event.request, { ignoreSearch: true }))
   );
 });

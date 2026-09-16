@@ -1,6 +1,6 @@
 # Kartičky ♥
 
-Erotická karetní hra pro páry (18+). Pět úrovní od škádlení po hardcore, přes 1 100 úkolů pro něj i pro ni.
+Erotická karetní hra pro páry (18+). Pět úrovní od škádlení po hardcore, téměř 1 700 úkolů pro něj i pro ni.
 
 **Hrát:** https://hukanai.github.io/karticky/
 

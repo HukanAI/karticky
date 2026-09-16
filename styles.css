@@ -231,6 +231,26 @@ legend { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
   font-size: clamp(1.2rem, 5.2vw, 1.5rem);
   line-height: 1.45;
 }
+.card-text.long { font-size: clamp(1.05rem, 4.5vw, 1.3rem); }
+.card-title {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--gold);
+  font-size: 1.25em;
+  font-weight: 700;
+}
+.card-goal {
+  display: block;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--sans);
+  font-size: 0.78em;
+  line-height: 1.45;
+  color: var(--text);
+}
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tags span {
   font-size: 0.8rem; padding: 4px 10px; border-radius: 999px;
@@ -247,6 +267,31 @@ legend { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
 .timer.over .timer-time { color: var(--accent); animation: beat 1s infinite; }
 
 .actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+
+/* Dialog */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(3px);
+  animation: fade 0.2s ease;
+}
+.modal-box {
+  width: 100%;
+  max-width: 400px;
+  background: linear-gradient(160deg, #2a0d15 0%, #16060b 100%);
+  border: 1px solid var(--gold-soft);
+  border-radius: var(--radius);
+  padding: 22px 18px 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.modal-box h2 { margin: 0 0 8px; font-family: var(--serif); font-size: 1.5rem; }
+.modal-box p { margin: 0 0 18px; color: var(--muted); }
 
 #end .btn { width: 100%; }
 #gate .btn, #level .btn { width: 100%; }

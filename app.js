@@ -153,7 +153,7 @@
       setupTimer(0);
       return;
     }
-    $('#cardText').textContent = c.text;
+    renderCardText($('#cardText'), c.text);
     const seen = new Set();
     for (const t of TAGS) {
       if (t.re.test(c.text)) {
@@ -166,6 +166,21 @@
     }
     $('#cardSafe').hidden = !SAFE_RE.test(c.text);
     setupTimer(c.timer);
+  }
+
+  // Karty ve tvaru „Název: úkol. Cíl: …“ se zobrazí s nadpisem a zvýrazněným cílem.
+  function renderCardText(el, text) {
+    el.textContent = '';
+    el.classList.toggle('long', text.length > 170);
+    const m = text.match(/^([^:.!?]{2,40}): (.+?) Cíl: (.+)$/);
+    if (!m) { el.textContent = text; return; }
+    const title = document.createElement('span');
+    title.className = 'card-title';
+    title.textContent = m[1];
+    const goal = document.createElement('span');
+    goal.className = 'card-goal';
+    goal.textContent = '🎯 ' + m[3];
+    el.append(title, m[2], goal);
   }
 
   function flipCard() {
@@ -360,8 +375,16 @@
   $('#timerBtn').addEventListener('click', toggleTimer);
   $('#timerReset').addEventListener('click', () => { setupTimer(timer.total); });
 
-  $('#quitBtn').addEventListener('click', () => {
-    if (confirm('Opravdu ukončit hru?')) { stopTimer(); openSetup(); }
+  // Vlastní dialog místo confirm() – nainstalované PWA v telefonu systémové dialogy často potlačí.
+  const quitModal = $('#quitModal');
+  $('#quitBtn').addEventListener('click', () => { quitModal.hidden = false; });
+  $('#quitNo').addEventListener('click', () => { quitModal.hidden = true; });
+  quitModal.addEventListener('click', e => { if (e.target === quitModal) quitModal.hidden = true; });
+  $('#quitYes').addEventListener('click', () => {
+    quitModal.hidden = true;
+    stopTimer();
+    state = null;
+    openSetup();
   });
 
   $('#endlessBtn').addEventListener('click', () => {
