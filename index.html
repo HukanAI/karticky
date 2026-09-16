@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14060a">
+  <meta name="description" content="Erotická karetní hra pro páry – 5 úrovní od předehry po hardcore.">
+  <meta name="robots" content="noindex">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kartičky">
+  <title>Kartičky</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-level="1">
+  <main class="app">
+
+    <!-- 18+ brána -->
+    <section id="gate" class="screen center" hidden>
+      <div class="logo">♥</div>
+      <h1>Kartičky</h1>
+      <p class="lead">Erotická hra pro páry</p>
+      <div class="panel">
+        <p>Tahle hra obsahuje otevřený sexuální obsah a je určena <strong>pouze pro dospělé</strong>.</p>
+        <p>Hrajte jen to, co chcete oba. Jakýkoli úkol můžete vyměnit a hru kdykoli ukončit.</p>
+      </div>
+      <button class="btn primary" id="gateOk">Je nám oběma 18+, vstoupit</button>
+    </section>
+
+    <!-- Nastavení -->
+    <section id="setup" class="screen" hidden>
+      <div class="logo small">♥</div>
+      <h1>Nová hra</h1>
+      <form id="setupForm" class="panel form" autocomplete="off">
+        <label>
+          <span>♂ Jméno muže</span>
+          <input id="nameMale" maxlength="20" placeholder="On" required>
+        </label>
+        <label>
+          <span>♀ Jméno ženy</span>
+          <input id="nameFemale" maxlength="20" placeholder="Ona" required>
+        </label>
+        <fieldset>
+          <legend>Kdo začíná</legend>
+          <div class="segmented">
+            <input type="radio" name="starter" id="stMale" value="male"><label for="stMale">On</label>
+            <input type="radio" name="starter" id="stFemale" value="female"><label for="stFemale">Ona</label>
+            <input type="radio" name="starter" id="stRandom" value="random" checked><label for="stRandom">Náhodně</label>
+          </div>
+        </fieldset>
+        <button class="btn primary" type="submit">Začít hru</button>
+      </form>
+      <details class="panel rules">
+        <summary>Jak se hraje</summary>
+        <ul>
+          <li>Hra má <strong>5 úrovní</strong> – od škádlení až po hardcore.</li>
+          <li>Střídáte se. Muž plní úkoly pro potěšení ženy, žena pro potěšení muže.</li>
+          <li>Klepnutím kartu otočíš. Když úkol splníš, dej <strong>Splněno</strong>.</li>
+          <li>Nechceš úkol? Dej <strong>Vyměnit</strong> a dostaneš jiný ze stejné úrovně.</li>
+          <li>Po <strong>6 splněných kartách</strong> (3 + 3) postupujete o úroveň výš.</li>
+          <li>Žádná karta se v jedné hře neopakuje.</li>
+          <li>Pomůcky: pírko, pouta, bičík, dva vibrátory. Hodí se i šátek, olej nebo lubrikant.</li>
+          <li>Před hrou si domluvte <strong>stop slovo</strong> – kdo ho řekne, všechno se okamžitě zastaví.</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- Úvod úrovně / level up -->
+    <section id="level" class="screen center" hidden>
+      <div class="levelup" id="levelUpBadge">LEVEL UP!</div>
+      <p class="level-num" id="levelNum">Úroveň 1 / 5</p>
+      <h1 class="level-name" id="levelName"></h1>
+      <p class="lead" id="levelDesc"></p>
+      <div class="level-steps" id="levelSteps" aria-hidden="true"></div>
+      <button class="btn primary" id="levelGo">Líznout kartu</button>
+    </section>
+
+    <!-- Hra -->
+    <section id="game" class="screen game" hidden>
+      <header class="topbar">
+        <div>
+          <div class="top-level" id="topLevel">Úroveň 1 / 5</div>
+          <div class="top-name" id="topName"></div>
+        </div>
+        <button class="icon-btn" id="quitBtn" aria-label="Ukončit hru">✕</button>
+      </header>
+      <div class="dots" id="dots" aria-label="Průběh úrovně"></div>
+
+      <div class="turn" id="turn"></div>
+
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Otočit kartu">
+        <div class="card-inner">
+          <div class="card-face card-back">
+            <div class="back-mark">♥</div>
+            <div class="back-hint">Klepni a otoč</div>
+          </div>
+          <div class="card-face card-front">
+            <div class="card-cat" id="cardCat"></div>
+            <p class="card-text" id="cardText"></p>
+            <div class="tags" id="cardTags"></div>
+            <p class="safe" id="cardSafe" hidden>🛑 Pamatujte na domluvené stop slovo.</p>
+            <div class="timer" id="timer" hidden>
+              <span class="timer-time" id="timerTime">0:00</span>
+              <button class="btn small" id="timerBtn" type="button">▶ Start</button>
+              <button class="btn small ghost" id="timerReset" type="button" aria-label="Znovu">↺</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn ghost" id="swapBtn" disabled>↻ Vyměnit</button>
+        <button class="btn primary" id="doneBtn" disabled>✓ Splněno</button>
+      </div>
+    </section>
+
+    <!-- Konec -->
+    <section id="end" class="screen center" hidden>
+      <div class="logo">🔥</div>
+      <h1>Dohráno!</h1>
+      <p class="lead" id="endText">Prošli jste všech 5 úrovní.</p>
+      <button class="btn primary" id="endlessBtn">Pokračovat v Hardcore</button>
+      <button class="btn ghost" id="newGameBtn">Nová hra</button>
+    </section>
+
+  </main>
+
+  <script src="cards/cat1.js"></script>
+  <script src="cards/cat2.js"></script>
+  <script src="cards/cat3.js"></script>
+  <script src="cards/cat4.js"></script>
+  <script src="cards/cat5.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
