@@ -1,5 +1,5 @@
 // Service worker – offline provoz. Při změně souborů zvyš verzi.
-const VERSION = 'karticky-v3';
+const VERSION = 'karticky-v4';
 const FILES = [
   './',
   'index.html',
