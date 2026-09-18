@@ -170,6 +170,12 @@ legend { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
   border: 1px solid var(--line); background: var(--panel); color: var(--muted);
   font-size: 1.1rem; cursor: pointer;
 }
+.level-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.level-nav-label {
+  font-size: 0.72rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
+}
+.level-nav .icon-btn { width: 40px; height: 34px; font-size: 0.9rem; }
+
 .dots { display: flex; gap: 6px; }
 .dots span { flex: 1; height: 5px; border-radius: 3px; background: var(--line); transition: background 0.3s; }
 .dots span.on { background: var(--accent); }
@@ -225,6 +231,20 @@ legend { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
   overflow-y: auto;
 }
 .card-cat { color: var(--gold); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
+/* Silueta polohy nad textem karty. */
+.pose {
+  flex: none;
+  height: clamp(104px, 21vh, 168px);
+  margin: 2px 0 -4px;
+}
+.pose-svg { display: block; width: 100%; height: 100%; }
+.pose-svg * { stroke-linecap: round; stroke-linejoin: round; }
+.pose-svg .ph { color: #1a070d; }
+.pose-svg .fm { color: var(--accent); }
+.pose-svg .ff { color: var(--gold); }
+.pose-svg .far { opacity: 0.5; }
+.pose-svg .pp { color: rgba(246, 233, 236, 0.22); }
+
 .card-text {
   margin: auto 0;
   font-family: var(--serif);

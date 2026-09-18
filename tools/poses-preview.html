@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Náhled poloh</title>
+<style>
+  :root { --accent: #d9577a; --gold: #e3b866; --line: rgba(255,255,255,0.22); --card: #1c070d; }
+  body { margin: 0; padding: 24px; background: #0e0407; color: #f6e9ec;
+         font: 14px system-ui, sans-serif; }
+  h1 { font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  figure { margin: 0; background: linear-gradient(160deg, #2a0d15 0%, #16060b 100%);
+           border: 1px solid rgba(227,184,102,0.35); border-radius: 14px; padding: 6px; }
+  figcaption { text-align: center; color: #bfa3aa; font-size: 12px; padding: 4px 0 2px; }
+  figure:nth-child(3n+2) { --accent: #e0303f; }
+  figure:nth-child(3n+3) { --accent: #b00020; }
+
+  .pose-svg { display: block; width: 100%; height: auto; }
+  .pose-svg * { stroke-linecap: round; stroke-linejoin: round; }
+  .pose-svg .ph { color: #16060b; }
+  .pose-svg .fm { color: var(--accent); }
+  .pose-svg .ff { color: var(--gold); }
+  .pose-svg .far { opacity: 0.5; }
+  .pose-svg .pp { color: var(--line); }
+</style>
+</head>
+<body>
+<h1>Náhled poloh</h1>
+<div class="grid" id="grid"></div>
+<script src="../poses.js"></script>
+<script>
+  const grid = document.getElementById('grid');
+  for (const [id, pose] of Object.entries(window.POSES)) {
+    const fig = document.createElement('figure');
+    fig.appendChild(window.renderPose(id));
+    const cap = document.createElement('figcaption');
+    cap.textContent = pose.name + ' · ' + id;
+    fig.appendChild(cap);
+    grid.appendChild(fig);
+  }
+  document.title = Object.keys(window.POSES).length + ' poloh';
+</script>
+</body>
+</html>
