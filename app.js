@@ -19,9 +19,60 @@
     { re: /(oba|obou|obě|dva|dvěma|druhý|druhým) vibrátor/i, label: '💜💜 2 vibrátory' },
     { re: /vibrátor/i, label: '💜 vibrátor' },
     { re: /šátk|zavázan|zavaž|pásk[au] přes oči/i, label: '🎭 šátek' },
+    { re: /kravat/i, label: '👔 kravata' },
     { re: /lubrikant|olej/i, label: '💧 lubrikant/olej' },
+    { re: /kostk[ay] ledu|kostku ledu|ledov|\bled[uem]?\b/i, label: '🧊 led' },
+    { re: /erekční kroužek|kroužek na penis|kroužk[eu]m/i, label: '⭕ kroužek' },
+    { re: /štětc|štětec|štětečk/i, label: '🖌️ štětec' },
+    { re: /žínk/i, label: '🧽 žínka' },
+    { re: /sluchátk/i, label: '🎧 sluchátka' },
+    { re: /telefon|mobil/i, label: '📱 telefon' },
   ];
-  const SAFE_RE = /pouta|pout[yuaie]|spout|bičík|svaž|přivaž/i;
+  const SAFE_RE = /pouta|pout[yuaie]|spout|bičík|svaž|přivaž|kravatou|za vlasy|na krku/i;
+
+  // Polohy u starších karet se odhadnou z textu; nové karty mají id polohy přímo v datech.
+  // asym = poloha, kde záleží, kdo je v pasivní roli (ve výchozím stavu ona).
+  const POSE_HINTS = [
+    { re: /\b69\b|navzájem ústy/i, pose: 'p69' },
+    { re: /misionář/i, pose: 'misionar' },
+    { re: /nohy na (tvých |jeho |svých )?ramen/i, pose: 'nohy_ramena' },
+    { re: /polštář(em)? pod (jejím |její |jeho |svými )?(zadečk|bok|pánv)/i, pose: 'misionar_polstar' },
+    { re: /na všech čtyřech|po čtyřech/i, pose: 'zezadu', asym: true },
+    { re: /přes (kraj|okraj) postele|hlav[uou] přes okraj/i, pose: 'oral_okraj', asym: true },
+    { re: /k čelu postele/i, pose: 'pouta_postel', asym: true },
+    { re: /lžičk/i, pose: 'lzicka' },
+    { re: /na kraji postele|na kraj postele/i, pose: 'kraj_postele', asym: true },
+    { re: /obkročmo|na klíně|na klín/i, pose: 'klin_celem' },
+    { re: /jezdi na něm|sedni si na něj|nasedni si|ona nahoře/i, pose: 'ona_nahore' },
+    { re: /na břiše/i, pose: 'na_brise', asym: true },
+    { re: /přes opěradlo/i, pose: 'predklon', asym: true },
+    { re: /o zeď|ke zdi|u zdi/i, pose: 'zed' },
+    { re: /na židli/i, pose: 'zidle_celem' },
+    { re: /zvedni ji|v náruč/i, pose: 'zvednuta' },
+    { re: /masíruj jí záda|masáž zad|záda olejem|masíruj mu záda/i, pose: 'masaz_zada', asym: true },
+    { re: /chodidl|nohy od prstů/i, pose: 'masaz_chodidla', asym: true },
+    { re: /obejmi (ji|ho) zezadu|zezadu (ji|ho) obejmi|přitiskni se k (němu|ní) zezadu|přitiskni si (ji|ho) zády|zezadu k sobě/i, pose: 'stoje_zezadu', asym: true },
+    { re: /zezadu/i, pose: 'zezadu', asym: true },
+    { re: /předkloň|předklon/i, pose: 'predklon_stoje', asym: true },
+    { re: /klekni si mezi|mezi její koleno|mezi její nohy/i, pose: 'oral_klek' },
+    { re: /klekni si před|klekni před n|klekni si k n/i, pose: 'oral_ona_klek' },
+    { re: /kouři|do úst|vezmi ho do/i, pose: 'oral_on_vleze' },
+    { re: /lízej|jazykem.*klitoris|klitoris.*jazyk/i, pose: 'oral_klek', poseF: 'oral_on_vleze' },
+    { re: /svlékej|svlékni|svleč/i, pose: 'svlekani', asym: true },
+    { re: /zády k sobě/i, pose: 'sed_zady' },
+    { re: /dýchejte|sladěn|do očí a nic/i, pose: 'sed_celem' },
+    { re: /obejmi|do náruč|objetí/i, pose: 'objeti' },
+  ];
+  // U karet pro ni se role prohodí, pokud věta nestaví do pozice ji samotnou.
+  const POSE_SELF = /\btě\b|\btebe\b|\btvo[ujiéýáě]|klekni si|lehni si|sedni si|posaď se|opři se|předkloň se|nech se|nech si|drž se|dej si|lež |ležíš|klečíš|sedíš|svlékni se|svlékej se|svlékneš se/i;
+
+  function poseFor(text, role) {
+    const hit = POSE_HINTS.find(h => h.re.test(text));
+    if (!hit) return '';
+    const pose = (role === 'female' && hit.poseF) || hit.pose;
+    if (role === 'female' && hit.asym && !POSE_SELF.test(text)) return pose + '!';
+    return pose;
+  }
 
   // ---------- Obrazovky ----------
   const SCREENS = ['gate', 'setup', 'level', 'game', 'end'];
@@ -70,9 +121,11 @@
     return Math.floor(Math.random() * max);
   }
 
-  function parseCard(raw) {
-    const [text, timer] = raw.split('|');
-    return { text: text.trim(), timer: timer ? parseInt(timer, 10) : 0 };
+  // Formát karty: "text", "text|sekundy", "text|sekundy|poloha" nebo "text||poloha".
+  function parseCard(raw, role) {
+    const [text, timer, pose] = raw.split('|');
+    const clean = text.trim();
+    return { text: clean, timer: timer ? parseInt(timer, 10) : 0, pose: (pose || '').trim() || poseFor(clean, role) };
   }
 
   // Vylosuje kartu pro hráče na tahu. Vrací false, pokud už žádná nezbývá.
@@ -81,7 +134,7 @@
     if (!pool.length) { state.card = null; return false; }
     const index = pool[randomInt(pool.length)];
     state.used.add(cardKey(state.level, state.turn, index));
-    state.card = { level: state.level, role: state.turn, index, ...parseCard(CATEGORIES[state.level][state.turn][index]) };
+    state.card = { level: state.level, role: state.turn, index, ...parseCard(CATEGORIES[state.level][state.turn][index], state.turn) };
     return true;
   }
 
@@ -94,6 +147,7 @@
     $('#levelName').textContent = cat.name;
     $('#levelDesc').textContent = cat.description;
     $('#levelGo').textContent = state.level === 0 ? 'Líznout první kartu' : 'Pokračovat';
+    $('#levelSkip').hidden = state.level >= CATEGORIES.length - 1;
     const steps = $('#levelSteps');
     steps.innerHTML = '';
     CATEGORIES.forEach((_, i) => {
@@ -128,6 +182,10 @@
     strong.textContent = state.names[state.turn];
     turn.appendChild(strong);
 
+    $('#levelNav').hidden = state.endless;
+    $('#prevLevelBtn').disabled = state.level === 0;
+    $('#nextLevelBtn').disabled = state.level >= CATEGORIES.length - 1;
+
     const card = $('#card');
     card.classList.remove('flipped');
     $('#swapBtn').disabled = true;
@@ -150,10 +208,12 @@
     if (!c) {
       $('#cardText').textContent = 'V této úrovni už pro tebe nejsou žádné další karty. Vymysli si vlastní úkol, nebo pokračujte dál.';
       $('#cardSafe').hidden = true;
+      showPose('');
       setupTimer(0);
       return;
     }
     renderCardText($('#cardText'), c.text);
+    showPose(c.pose);
     const seen = new Set();
     for (const t of TAGS) {
       if (t.re.test(c.text)) {
@@ -166,6 +226,15 @@
     }
     $('#cardSafe').hidden = !SAFE_RE.test(c.text);
     setupTimer(c.timer);
+  }
+
+  // Silueta polohy nad textem karty. Když poloha není, obrázek se skryje.
+  function showPose(id) {
+    const box = $('#cardPose');
+    box.innerHTML = '';
+    const svg = id && window.renderPose ? window.renderPose(id) : null;
+    if (svg) box.appendChild(svg);
+    box.hidden = !svg;
   }
 
   // Karty ve tvaru „Název: úkol. Cíl: …“ se zobrazí s nadpisem a zvýrazněným cílem.
@@ -223,6 +292,17 @@
   function onSwap() {
     stopTimer();
     if (!draw()) return;
+    renderGame();
+  }
+
+  // Přeskočení kategorie (i zpět). Odehrané karty zůstávají odehrané,
+  // takže při návratu se nic neopakuje.
+  function goToLevel(level) {
+    if (state.endless || level < 0 || level >= CATEGORIES.length) return;
+    stopTimer();
+    state.level = level;
+    state.done = 0;
+    draw();
     renderGame();
   }
 
@@ -372,6 +452,14 @@
 
   $('#doneBtn').addEventListener('click', onDone);
   $('#swapBtn').addEventListener('click', onSwap);
+  $('#prevLevelBtn').addEventListener('click', () => goToLevel(state.level - 1));
+  $('#nextLevelBtn').addEventListener('click', () => goToLevel(state.level + 1));
+  $('#levelSkip').addEventListener('click', () => {
+    if (state.level >= CATEGORIES.length - 1) return;
+    state.level++;
+    state.done = 0;
+    renderLevelScreen();
+  });
   $('#timerBtn').addEventListener('click', toggleTimer);
   $('#timerReset').addEventListener('click', () => { setupTimer(timer.total); });
 
@@ -400,7 +488,19 @@
   $('#newGameBtn').addEventListener('click', openSetup);
 
   // ---------- Start ----------
-  CATEGORIES.sort((a, b) => a.id - b.id);
+  // Karty jedné kategorie jsou rozdělené do víc souborů – sloučíme je podle id.
+  window.CATEGORIES = CATEGORIES
+    .sort((a, b) => a.id - b.id)
+    .reduce((out, cat) => {
+      const prev = out[out.length - 1];
+      if (prev && prev.id === cat.id) {
+        prev.male.push(...cat.male);
+        prev.female.push(...cat.female);
+      } else {
+        out.push({ ...cat, male: [...cat.male], female: [...cat.female] });
+      }
+      return out;
+    }, []);
   if (store.get('karticky.adult') === '1') openSetup();
   else show('gate');
 
@@ -411,5 +511,5 @@
   }
 
   // Pro ladění
-  window.__karticky = { get state() { return state; } };
+  window.__karticky = { get state() { return state; }, parse: parseCard };
 })();

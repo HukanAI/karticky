@@ -61,9 +61,12 @@
           <li>Střídáte se. Muž plní úkoly pro potěšení ženy, žena pro potěšení muže.</li>
           <li>Klepnutím kartu otočíš. Když úkol splníš, dej <strong>Splněno</strong>.</li>
           <li>Nechceš úkol? Dej <strong>Vyměnit</strong> a dostaneš jiný ze stejné úrovně.</li>
+          <li>U poloh je na kartě <strong>silueta</strong>, ať je hned jasné, kdo je kde.</li>
+          <li>Kategorie můžete kdykoli <strong>přeskočit</strong> šipkami nad kartou – i zpátky.</li>
           <li>Po <strong>6 splněných kartách</strong> (3 + 3) postupujete o úroveň výš.</li>
           <li>Žádná karta se v jedné hře neopakuje.</li>
-          <li>Pomůcky: pírko, pouta, bičík, dva vibrátory. Hodí se i šátek, olej nebo lubrikant.</li>
+          <li>Většina karet nepotřebuje nic. Jinak: pírko, pouta, bičík, dva vibrátory, šátek, olej a lubrikant.</li>
+          <li>Občas se hodí i kostky ledu, erekční kroužek, kravata, štětec, žínka, sluchátka nebo telefon.</li>
           <li>Před hrou si domluvte <strong>stop slovo</strong> – kdo ho řekne, všechno se okamžitě zastaví.</li>
         </ul>
       </details>
@@ -77,6 +80,7 @@
       <p class="lead" id="levelDesc"></p>
       <div class="level-steps" id="levelSteps" aria-hidden="true"></div>
       <button class="btn primary" id="levelGo">Líznout kartu</button>
+      <button class="btn ghost" id="levelSkip" hidden>⏭ Přeskočit tuhle kategorii</button>
     </section>
 
     <!-- Hra -->
@@ -89,6 +93,11 @@
         <button class="icon-btn" id="quitBtn" aria-label="Ukončit hru">✕</button>
       </header>
       <div class="dots" id="dots" aria-label="Průběh úrovně"></div>
+      <div class="level-nav" id="levelNav">
+        <button class="icon-btn" id="prevLevelBtn" aria-label="Předchozí kategorie">◀</button>
+        <span class="level-nav-label">Změnit kategorii</span>
+        <button class="icon-btn" id="nextLevelBtn" aria-label="Další kategorie">▶</button>
+      </div>
 
       <div class="turn" id="turn"></div>
 
@@ -100,6 +109,7 @@
           </div>
           <div class="card-face card-front">
             <div class="card-cat" id="cardCat"></div>
+            <div class="pose" id="cardPose" hidden></div>
             <p class="card-text" id="cardText"></p>
             <div class="tags" id="cardTags"></div>
             <p class="safe" id="cardSafe" hidden>🛑 Pamatujte na domluvené stop slovo.</p>
@@ -141,11 +151,32 @@
     </div>
   </div>
 
+  <script src="poses.js"></script>
   <script src="cards/cat1.js"></script>
+  <script src="cards/cat1b.js"></script>
+  <script src="cards/cat1c.js"></script>
+  <script src="cards/cat1d.js"></script>
+  <script src="cards/cat1e.js"></script>
   <script src="cards/cat2.js"></script>
+  <script src="cards/cat2b.js"></script>
+  <script src="cards/cat2c.js"></script>
+  <script src="cards/cat2d.js"></script>
+  <script src="cards/cat2e.js"></script>
   <script src="cards/cat3.js"></script>
+  <script src="cards/cat3b.js"></script>
+  <script src="cards/cat3c.js"></script>
+  <script src="cards/cat3d.js"></script>
+  <script src="cards/cat3e.js"></script>
   <script src="cards/cat4.js"></script>
+  <script src="cards/cat4b.js"></script>
+  <script src="cards/cat4c.js"></script>
+  <script src="cards/cat4d.js"></script>
+  <script src="cards/cat4e.js"></script>
   <script src="cards/cat5.js"></script>
+  <script src="cards/cat5b.js"></script>
+  <script src="cards/cat5c.js"></script>
+  <script src="cards/cat5d.js"></script>
+  <script src="cards/cat5e.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

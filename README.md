@@ -1,6 +1,7 @@
 # Kartičky ♥
 
-Erotická karetní hra pro páry (18+). Pět úrovní od škádlení po hardcore, téměř 1 700 úkolů pro něj i pro ni.
+Erotická karetní hra pro páry (18+). Pět úrovní od škádlení po hardcore, 5 076 úkolů pro něj i pro ni.
+U poloh je na kartě silueta obou postav, aby bylo hned jasné, kdo je kde.
 
 **Hrát:** https://hukanai.github.io/karticky/
 
@@ -15,7 +16,9 @@ Erotická karetní hra pro páry (18+). Pět úrovní od škádlení po hardcore
   4. Sex a polohy
   5. Hardcore
 - Žádná karta se v jedné hře neopakuje. Úkoly s časem mají časovač.
-- Pomůcky: pírko, pouta, bičík, dva vibrátory (hodí se i šátek, olej a lubrikant).
+- Kategorii můžete kdykoli přeskočit (i se vrátit) šipkami nad kartou.
+- Většina karet nepotřebuje nic. Jinak: pírko, pouta, bičík, dva vibrátory, šátek, olej a lubrikant.
+- Občas se hodí kostky ledu, erekční kroužek, kravata, štětec, žínka, sluchátka nebo telefon.
 - Před hrou si domluvte **stop slovo**.
 
 ## Instalace do telefonu
@@ -27,8 +30,12 @@ Po instalaci funguje i offline.
 
 ## Vývoj
 
-Čisté HTML/CSS/JS bez build kroku. Karty jsou v `cards/cat1.js` … `cards/cat5.js`
-(formát `"text"` nebo `"text|sekundy"` pro časovač). Kontrola dat:
+Čisté HTML/CSS/JS bez build kroku. Karty jsou v `cards/cat1.js` … `cards/cat5e.js` –
+každá kategorie má víc souborů se stejným `id`, které se při startu sloučí.
+Formát karty: `"text"`, `"text|sekundy"` nebo `"text|sekundy|poloha"` (časovač smí být
+prázdný: `"text||poloha"`). Vykřičník za id polohy (`zezadu!`) prohodí role obou
+postav na obrázku – hodí se u karet, kde je v pasivní roli on. Siluety poloh jsou v `poses.js`, jejich náhled otevřete
+v `tools/poses-preview.html`. Kontrola dat:
 
 ```bash
 node tools/check-cards.mjs
