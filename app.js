@@ -210,6 +210,7 @@
       $('#cardSafe').hidden = true;
       showPose('');
       setupTimer(0);
+      fitCard();
       return;
     }
     renderCardText($('#cardText'), c.text);
@@ -226,7 +227,25 @@
     }
     $('#cardSafe').hidden = !SAFE_RE.test(c.text);
     setupTimer(c.timer);
+    fitCard();
   }
+
+  // Obsah karty se musí vejít bez posouvání – postupně zmenšíme obrázek, mezery a písmo.
+  function fitCard() {
+    const front = $('.card-front');
+    if (!front.clientHeight) return;
+    for (let step = 0; step <= 3; step++) {
+      front.dataset.fit = String(step);
+      if (front.scrollHeight <= front.clientHeight + 1) return;
+    }
+  }
+
+  let fitTimeout = null;
+  window.addEventListener('resize', () => {
+    if ($('#game').hidden) return;
+    clearTimeout(fitTimeout);
+    fitTimeout = setTimeout(fitCard, 120);
+  });
 
   // Silueta polohy nad textem karty. Když poloha není, obrázek se skryje.
   function showPose(id) {
