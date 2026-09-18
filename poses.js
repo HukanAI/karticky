@@ -574,8 +574,10 @@
     return `${r(x0)} ${r(y0)} ${r(bw)} ${r(bh)}`;
   }
 
+  // Id polohy může končit vykřičníkem – pak se role obou postav prohodí.
   function renderPose(id) {
-    const pose = POSES[id];
+    const swap = id.endsWith('!');
+    const pose = POSES[swap ? id.slice(0, -1) : id];
     if (!pose) return null;
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', viewBox(pose));
@@ -583,7 +585,7 @@
     svg.setAttribute('role', 'img');
     svg.setAttribute('aria-label', 'Poloha: ' + pose.name);
     svg.innerHTML = `<g class="pp">${(pose.props || []).map(p => PROPS[p] || '').join('')}</g>` +
-      pose.figs.map(figureSvg).join('');
+      pose.figs.map(f => figureSvg(swap ? { ...f, role: f.role === 'm' ? 'f' : 'm' } : f)).join('');
     return svg;
   }
 

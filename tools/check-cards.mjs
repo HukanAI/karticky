@@ -67,8 +67,9 @@ for (const cat of CATEGORIES) {
         console.error(`CHYBA: špatný časovač ${cat.id}/${role}/${i}: ${raw}`); errors++;
       }
       if (pose !== undefined && pose !== '') {
-        if (!POSES[pose]) { console.error(`CHYBA: neznámá poloha „${pose}" ${cat.id}/${role}/${i}`); errors++; }
-        else { withPose++; poseUse[pose] = (poseUse[pose] || 0) + 1; }
+        const base = pose.replace(/!$/, '');
+        if (!POSES[base]) { console.error(`CHYBA: neznámá poloha „${pose}" ${cat.id}/${role}/${i}`); errors++; }
+        else { withPose++; poseUse[base] = (poseUse[base] || 0) + 1; }
       }
       if (timer) timers++;
       if (text.length < 15) { console.error(`CHYBA: krátký text ${cat.id}/${role}/${i}`); errors++; }

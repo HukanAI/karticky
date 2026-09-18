@@ -154,7 +154,7 @@ CATEGORIES.push({
     "Kouři mu a mezi tím mu přejížděj pírkem po břiše.|300|oral_on_vleze",
     "Dej si vibrátor do volné ruky a používej ho zároveň s ústy.|300|oral_on_vleze",
     "Dvojí zdroj: Vibrátor na varlatech a tvoje ústa nahoře. Nikdy neuber ani jedno. Cíl: dovést ho tam oběma naráz.|300|oral_on_vleze",
-    "Kouři mu a nech ho, ať se drží čela postele. Nesmí pustit.|300|pouta_postel",
+    "Kouři mu a nech ho, ať se drží čela postele. Nesmí pustit.|300|pouta_postel!",
     "Řekni mu, že přestaneš, kdykoli se ti bude chtít. A několikrát to udělej.|300|oral_on_vleze",
     "Kouři mu tak, aby se musel úplně odevzdat a nic neřídil.|300|oral_on_vleze",
     "Nech ho ležet nehnutě. Za každý pohyb si připíše minutu navíc.|300|oral_on_vleze",

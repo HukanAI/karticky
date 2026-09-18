@@ -31,38 +31,48 @@
   const SAFE_RE = /pouta|pout[yuaie]|spout|bičík|svaž|přivaž|kravatou|za vlasy|na krku/i;
 
   // Polohy u starších karet se odhadnou z textu; nové karty mají id polohy přímo v datech.
+  // asym = poloha, kde záleží, kdo je v pasivní roli (ve výchozím stavu ona).
   const POSE_HINTS = [
     { re: /\b69\b|navzájem ústy/i, pose: 'p69' },
     { re: /misionář/i, pose: 'misionar' },
     { re: /nohy na (tvých |jeho |svých )?ramen/i, pose: 'nohy_ramena' },
     { re: /polštář(em)? pod (jejím |její |jeho |svými )?(zadečk|bok|pánv)/i, pose: 'misionar_polstar' },
-    { re: /na všech čtyřech|po čtyřech/i, pose: 'zezadu' },
-    { re: /přes (kraj|okraj) postele|hlav[uou] přes okraj/i, pose: 'oral_okraj' },
-    { re: /k čelu postele/i, pose: 'pouta_postel' },
+    { re: /na všech čtyřech|po čtyřech/i, pose: 'zezadu', asym: true },
+    { re: /přes (kraj|okraj) postele|hlav[uou] přes okraj/i, pose: 'oral_okraj', asym: true },
+    { re: /k čelu postele/i, pose: 'pouta_postel', asym: true },
     { re: /lžičk/i, pose: 'lzicka' },
-    { re: /na kraji postele|na kraj postele/i, pose: 'kraj_postele' },
+    { re: /na kraji postele|na kraj postele/i, pose: 'kraj_postele', asym: true },
     { re: /obkročmo|na klíně|na klín/i, pose: 'klin_celem' },
     { re: /jezdi na něm|sedni si na něj|nasedni si|ona nahoře/i, pose: 'ona_nahore' },
-    { re: /na břiše/i, pose: 'na_brise' },
-    { re: /přes opěradlo/i, pose: 'predklon' },
+    { re: /na břiše/i, pose: 'na_brise', asym: true },
+    { re: /přes opěradlo/i, pose: 'predklon', asym: true },
     { re: /o zeď|ke zdi|u zdi/i, pose: 'zed' },
     { re: /na židli/i, pose: 'zidle_celem' },
     { re: /zvedni ji|v náruč/i, pose: 'zvednuta' },
-    { re: /masíruj jí záda|masáž zad|záda olejem/i, pose: 'masaz_zada' },
-    { re: /chodidl|nohy od prstů/i, pose: 'masaz_chodidla' },
-    { re: /zezadu/i, pose: 'zezadu' },
-    { re: /předkloň|předklon/i, pose: 'predklon_stoje' },
+    { re: /masíruj jí záda|masáž zad|záda olejem|masíruj mu záda/i, pose: 'masaz_zada', asym: true },
+    { re: /chodidl|nohy od prstů/i, pose: 'masaz_chodidla', asym: true },
+    { re: /obejmi (ji|ho) zezadu|zezadu (ji|ho) obejmi|přitiskni se k (němu|ní) zezadu|přitiskni si (ji|ho) zády|zezadu k sobě/i, pose: 'stoje_zezadu', asym: true },
+    { re: /zezadu/i, pose: 'zezadu', asym: true },
+    { re: /předkloň|předklon/i, pose: 'predklon_stoje', asym: true },
     { re: /klekni si mezi|mezi její koleno|mezi její nohy/i, pose: 'oral_klek' },
     { re: /klekni si před|klekni před n|klekni si k n/i, pose: 'oral_ona_klek' },
     { re: /kouři|do úst|vezmi ho do/i, pose: 'oral_on_vleze' },
-    { re: /lízej|jazykem.*klitoris|klitoris.*jazyk/i, pose: 'oral_klek' },
-    { re: /svlékej|svlékni|svleč/i, pose: 'svlekani' },
+    { re: /lízej|jazykem.*klitoris|klitoris.*jazyk/i, pose: 'oral_klek', poseF: 'oral_on_vleze' },
+    { re: /svlékej|svlékni|svleč/i, pose: 'svlekani', asym: true },
     { re: /zády k sobě/i, pose: 'sed_zady' },
     { re: /dýchejte|sladěn|do očí a nic/i, pose: 'sed_celem' },
     { re: /obejmi|do náruč|objetí/i, pose: 'objeti' },
-    { re: /zezadu ji obejmi|zezadu ho obejmi/i, pose: 'stoje_zezadu' },
   ];
-  const poseFor = text => (POSE_HINTS.find(h => h.re.test(text)) || {}).pose || '';
+  // U karet pro ni se role prohodí, pokud věta nestaví do pozice ji samotnou.
+  const POSE_SELF = /\btě\b|\btebe\b|\btvo[ujiéýáě]|klekni si|lehni si|sedni si|posaď se|opři se|předkloň se|nech se|nech si|drž se|dej si|lež |ležíš|klečíš|sedíš|svlékni se|svlékej se|svlékneš se/i;
+
+  function poseFor(text, role) {
+    const hit = POSE_HINTS.find(h => h.re.test(text));
+    if (!hit) return '';
+    const pose = (role === 'female' && hit.poseF) || hit.pose;
+    if (role === 'female' && hit.asym && !POSE_SELF.test(text)) return pose + '!';
+    return pose;
+  }
 
   // ---------- Obrazovky ----------
   const SCREENS = ['gate', 'setup', 'level', 'game', 'end'];
@@ -112,10 +122,10 @@
   }
 
   // Formát karty: "text", "text|sekundy", "text|sekundy|poloha" nebo "text||poloha".
-  function parseCard(raw) {
+  function parseCard(raw, role) {
     const [text, timer, pose] = raw.split('|');
     const clean = text.trim();
-    return { text: clean, timer: timer ? parseInt(timer, 10) : 0, pose: (pose || '').trim() || poseFor(clean) };
+    return { text: clean, timer: timer ? parseInt(timer, 10) : 0, pose: (pose || '').trim() || poseFor(clean, role) };
   }
 
   // Vylosuje kartu pro hráče na tahu. Vrací false, pokud už žádná nezbývá.
@@ -124,7 +134,7 @@
     if (!pool.length) { state.card = null; return false; }
     const index = pool[randomInt(pool.length)];
     state.used.add(cardKey(state.level, state.turn, index));
-    state.card = { level: state.level, role: state.turn, index, ...parseCard(CATEGORIES[state.level][state.turn][index]) };
+    state.card = { level: state.level, role: state.turn, index, ...parseCard(CATEGORIES[state.level][state.turn][index], state.turn) };
     return true;
   }
 
@@ -501,5 +511,5 @@
   }
 
   // Pro ladění
-  window.__karticky = { get state() { return state; } };
+  window.__karticky = { get state() { return state; }, parse: parseCard };
 })();
