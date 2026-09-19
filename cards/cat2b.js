@@ -35,7 +35,7 @@ CATEGORIES.push({
     "Tah na jeden nádech: Projeď jí dlaněmi od kolen až po ramena a zpátky. Jeden tah trvá přesně jeden nádech. Cíl: dvacet tahů, žádný rychlejší.|120|vedle_ona_lezi",
     "Ruce pod tričkem: Zezadu jí zajeď rukama pod tričko a hlaď jí břicho a žebra. Cíl: dvě minuty a výš než k žebrům nesahat.|120|stoje_zezadu",
     "Pomalu, pak rychle: Minutu ji hlaď co nejpomaleji, minutu naopak rychle a pevně. Cíl: ať sama řekne, co chce.|120|masaz_zada",
-    "Jen se tisknout: Lehni si na ni a nech se od ní obejmout nohama. Cíl: dvě minuty, při kterých se ani jeden z vás nepohne.|120|propletene",
+    "Jen se tisknout: Lehni si na ni, nech se obejmout nohama a jen se o sebe tiskněte celým tělem. Cíl: dvě minuty a ani jeden se nepohne.|120|propletene",
     "Zespoda nahoru: Masíruj jí prsa zespoda nahoru, jako bys je nadzvedával. Cíl: tři minuty a bradavek se ani jednou nedotknout.|180|vedle_ona_lezi",
     "Předloktí místo dlaní: Naolejuj si předloktí a jeď jí jimi po zádech. Cíl: deset tahů a pak se zeptat, co je lepší.|180|masaz_zada",
     "Kousnutí a jazyk: Kousni ji zlehka do ramene a pak to místo dlouho olizuj. Cíl: pět kousnutí, každé na jiném místě ramene.|90|stoje_zezadu",
