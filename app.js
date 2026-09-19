@@ -28,7 +28,7 @@
     { re: /sluchátk/i, label: '🎧 sluchátka' },
     { re: /telefon|mobil/i, label: '📱 telefon' },
   ];
-  const SAFE_RE = /pouta|pout[yuaie]|spout|bičík|svaž|přivaž|kravatou|za vlasy|na krku/i;
+  const SAFE_RE = /pouta|pout[yuaie]|spout|bičík|svaž|přivaž|kravatou|za vlasy|na krku|anál/i;
 
   // Polohy u starších karet se odhadnou z textu; nové karty mají id polohy přímo v datech.
   // asym = poloha, kde záleží, kdo je v pasivní roli (ve výchozím stavu ona).

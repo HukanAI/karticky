@@ -56,3 +56,58 @@ export const GOAL_RE = /^([^:.!?]{2,40}): (.+?) Cíl: (.+)$/;
 export const MIN_LEN = 45;
 export const MAX_LEN = 200;
 export const MIN_GOAL_SHARE = 0.6;
+
+// ---------------------------------------------------------------------------
+// Pojmenovaný akt: z karty musí být jasné, co se s tělem druhého děje.
+// Poloha, tempo ani pravidlo to nenahradí.
+
+// Ruce a pomůcky na konkrétním místě (kategorie 2).
+const RUKY = [
+  'hlaď','hlad','pohlaď','masíruj','namasíruj','rozmasíruj','masáž','dráždi','drážděn','škádl',
+  'prsti','prstí','prstem','prsty','prstů','honi','hoň','honě','vyhoň','masturb','ruční',
+  'třeš','tři\\b','rozetři','mnuj','ťukej','krouž','kroužk','kroužen','sevři','stiskni','stisk','svírej',
+  'klouzej','otírej','přejeď','přejížděj','projeď','obkresl','kresli','šimrej','tahej','táhni',
+  'vibrátor','vibrac','vibruj','kroužk[eu]m','pírk','štětc','štětec','žínk','ledem','kostk','olej','naolejuj','namaž','lubrik',
+  'klitoris','bradavk','penis','varlat','žalud','uzdičk','stydk','klín','hráz','prostat','kunda','kundičk','péro','koule',
+  'polib','líb','kous','saj\\b','olizuj','olízn','lízej','jazyk','ústy','foukej','foukni',
+  'orgasm','vyvrchol','udělá se','udělal','udělala','dojde','dojít','dojdeš','hran[uěy]','edg','odpír',
+];
+
+// Orální akt (kategorie 3).
+const ORAL = [
+  'lízej','lízá','lízat','lížeš','ližte','lízán','olizuj','olízn','olizován',
+  'kouři','kouříš','kouřit','kouřen','kuř\\b','kuř[ií]','do pusy','v puse','ústy','úst[ay]','jazyk','jazýčk',
+  'saj\\b','sát\\b','saješ','nasáv','cucej','bzuč','69','devětašedesát','anilingus','polib','líb',
+];
+
+// Průnik (kategorie 4).
+const PRUNIK = [
+  'miluj','milov','vnikni','vnikej','vnikne','vniknout','vniká','vnikáš','vnikl','vnikla',
+  'přiráž','přirážej','přirážet','příraz','přírazů','přírazy','zasouvej','zasuň','zaveď','zavede','zavedeš','zaveze',
+  'jezdi','jezdí','jezdíš','jízd','jezdkyn','nasedej','nasedá','sedej si na n','posaď se na n',
+  'je v tobě','jsi v ní','v ní jsi','v tobě je','zůstaň v ní','zůstaň v něm','v ní zůsta','vyklouz','bez vytažení',
+  'anál','análn','análu','análem','do zadečku','do zadku','kolík','dvojit[ýáé] průnik','průnik',
+  'sex\\b','sexu\\b','sexem\\b','při sexu','vezmi si ji','vezmi si ho','vezme t','ať tě vezme','mrdej','mrdá','šukej','šuká','ojeď','ojede',
+];
+
+// Plácání, bičík, svazování se stimulací (jen kategorie 5).
+const HARDCORE = ['plác','plácni','plácej','šlehni','bičík','ránu','rány','ran\\b','úder','výprask'];
+
+const re = list => new RegExp(list.join('|'), 'i');
+
+// Co musí pojmenovat karta v které kategorii. Kategorie 1 (škádlení) nic navíc –
+// líbání, mluvení a dráždění přes oblečení jsou samy o sobě akt.
+export const ACT_BY_CAT = {
+  2: re([...RUKY, ...ORAL]),
+  3: re(ORAL),
+  4: re(PRUNIK),
+  5: re([...PRUNIK, ...ORAL, ...RUKY, ...HARDCORE]),
+};
+
+// Anální průnik – ne kousnutí do zadečku ani masáž hráze.
+export const ANAL = /anál|análn|análu|análem|kolík|(?:vsuň|vsouvej|vnikni|vnikej|zaveď|zavede|zasuň|strč|nech .{0,20}vniknout)[^.!?]{0,40}do zade[čc]k|prostat/i;
+// Kdo řídí tempo a hloubku – u análu vždycky přijímající.
+export const ANAL_TEMPO = /(?:tempo|hloubk|rychlost)[^.!?]{0,40}(?:řídí|určuje|určuješ|řídíš|vybír|volí)|(?:řídí|určuje|určuješ|řídíš)[^.!?]{0,30}(?:tempo|hloubk|ona\b|on\b|sama|sám)|až na (?:její|jeho|tvoje|tvé) slovo|dokud (?:si )?ne(?:řekne|požád|dovolí)|ona (?:tě )?navádí|on (?:tě )?navádí|nech ji, ať si|nech ho, ať si|podle (?:ní|něj)|sama (?:si )?(?:řídí|určuje|zavede|nasedá)|sám (?:si )?(?:řídí|určuje|zavede|nasedá)/i;
+
+// Tvary, které do textů nepatří.
+export const BANNED = [{ re: /prstěj/i, use: 'prsti' }];

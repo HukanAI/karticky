@@ -1,7 +1,8 @@
 // Kontrola dat karet: node tools/check-cards.mjs
 import { readFileSync, readdirSync } from 'node:fs';
 import vm from 'node:vm';
-import { ACTION, END, POSTURE, GOAL_RE, MIN_LEN, MAX_LEN, MIN_GOAL_SHARE } from './card-rules.mjs';
+import { ACTION, END, POSTURE, GOAL_RE, MIN_LEN, MAX_LEN, MIN_GOAL_SHARE,
+         ACT_BY_CAT, ANAL, ANAL_TEMPO, BANNED } from './card-rules.mjs';
 
 const MIN = 500;
 const ctx = { window: {}, document: { createElementNS: () => ({ setAttribute() {}, set innerHTML(_v) {} }) } };
@@ -86,6 +87,19 @@ for (const cat of CATEGORIES) {
       const hasEnd = END.test(text) || (timer && /^[1-9]\d*$/.test(timer));
       if (!hasEnd) { console.error(`CHYBA: karta nemá měřitelný konec ${where}: ${text}`); errors++; }
       if (POSTURE.test(text) && !hasEnd) { console.error(`CHYBA: karta popisuje jen postoj ${where}: ${text}`); errors++; }
+      // Karta musí pojmenovat, co se s tělem druhého děje – poloha to nenahradí.
+      const act = ACT_BY_CAT[cat.id];
+      if (act && !act.test(text)) {
+        console.error(`CHYBA: karta nepojmenuje akt ${where}: ${text}`); errors++;
+      }
+      // U análního průniku vždycky lubrikant a kdo řídí tempo a hloubku.
+      if (ANAL.test(text)) {
+        if (!/lubrik/i.test(text)) { console.error(`CHYBA: anál bez lubrikantu ${where}: ${text}`); errors++; }
+        else if (!ANAL_TEMPO.test(text)) { console.error(`CHYBA: anál neříká, kdo řídí tempo ${where}: ${text}`); errors++; }
+      }
+      for (const b of BANNED) {
+        if (b.re.test(text)) { console.error(`CHYBA: zakázaný tvar (použij „${b.use}“) ${where}: ${text}`); errors++; }
+      }
       if (text.includes(' Cíl: ')) {
         if (GOAL_RE.test(text)) goalsInCat++;
         else { console.error(`CHYBA: cíl se nevykreslí (název je moc dlouhý nebo má interpunkci) ${where}: ${text}`); errors++; }
