@@ -10,7 +10,7 @@ export const ACTION = new RegExp([
   'opisuj','obcházej','kresli','nakresli','piš\\b','napiš','krouži','kroužkuj','kroužen','zakruť',
   'drážd','škádl','šimrej','prstěj','prstěn','honi','honě','hoň','kmitej','klouzej','otírej','jeď','jezdi',
   'dotýkej','dotkni','dotknout','sáhni','sahej','chyť','sevři','stisk','tiskni','přitisk','přitáhni','objímej','obejmi',
-  'dej\\b','dávej','dáš\\b','podlož','přilož','přikládej','přiklop','pokládej','polož','nabídni','vem\\b','vezmi','použij','použijte',
+  'dej\\b','dávej','dáš\\b','podlož','přilož','přikládej','přiklop','pokládej','polož','nabídni','vem\\b','vezmi','ber\\b','bereš','použij','použijte',
   // sex, pohyb
   'miluj','milovat','vnikni','vnikej','vnikneš','přiráž','přirážej','přirážet','zasouvej','zasuň','vsuň',
   'pohybuj','hýbej','hýbat','houpej','jezd','sedej','nasedej','obkroč','propleť','přehni','otoč','přetoč',
@@ -70,13 +70,19 @@ const RUKY = [
   'vibrátor','vibrac','vibruj','kroužk[eu]m','pírk','štětc','štětec','žínk','ledem','kostk','olej','naolejuj','namaž','lubrik',
   'klitoris','bradavk','penis','varlat','žalud','uzdičk','stydk','klín','hráz','prostat','kunda','kundičk','péro','koule',
   'polib','líb','kous','saj\\b','olizuj','olízn','lízej','jazyk','ústy','foukej','foukni',
+  'vsuň','vsouvej','zasuň','zasouvej','vytahuj','vytáhni','mezi nohy','mezi nohama','mezi nohy',
+  'svlék','svlékni','stáhni','stahuj','sundej','rozepn','vyhrň','přitiskni','tiskni','přitlač','vlň','vlni',
+  'prohlíž','prohlédni','dívej','dívá','popisuj','popiš','sleduj','pozoruj','erek','tah\\b','tahů','tahy','kořen','špičk',
+  'dotýkej','dotýká','dotkni','dotek','doteky','doteků','doteku','dotknout','sáhni','sahej','chyť',
+  'obejm','prozkoum','věnuj','věnuješ','pohybuj','hýbej','pohyb',
+  'hněť','hnět','obejmi','objímej','objet','kruh','dlaň','dlaně','dlaněmi','dlaní','ohmat','zápěst','do kalhot','do kalhotek','do trenýrek',
   'orgasm','vyvrchol','udělá se','udělal','udělala','dojde','dojít','dojdeš','hran[uěy]','edg','odpír',
 ];
 
 // Orální akt (kategorie 3).
 const ORAL = [
   'lízej','lízá','lízat','lížeš','ližte','lízán','olizuj','olízn','olizován',
-  'kouři','kouříš','kouřit','kouřen','kuř\\b','kuř[ií]','do pusy','v puse','ústy','úst[ay]','jazyk','jazýčk',
+  'kouři','kouříš','kouřit','kouřen','kuř','kouř','do pusy','v puse','pusou','pusu','pusa','rty','rtů','rtem','ret','sevři rty','ústy','úst[ay]','jazyk','jazýčk',
   'saj\\b','sát\\b','saješ','nasáv','cucej','bzuč','69','devětašedesát','anilingus','polib','líb',
 ];
 
@@ -105,7 +111,7 @@ export const ACT_BY_CAT = {
 };
 
 // Anální průnik – ne kousnutí do zadečku ani masáž hráze.
-export const ANAL = /anál|análn|análu|análem|kolík|(?:vsuň|vsouvej|vnikni|vnikej|zaveď|zavede|zasuň|strč|nech .{0,20}vniknout)[^.!?]{0,40}do zade[čc]k|prostat/i;
+export const ANAL = /anál|análn|análu|análem|kolík|(?:vsuň|vsouvej|vnikni|vnikej|zaveď|zavede|zasuň|strč|nech .{0,20}vniknout)[^.!?]{0,40}do zade[čc]k|masíruj[^.!?]{0,30}prostat|prostat[^.!?]{0,20}(?:prstem|prst)/i;
 // Kdo řídí tempo a hloubku – u análu vždycky přijímající.
 export const ANAL_TEMPO = /(?:tempo|hloubk|rychlost)[^.!?]{0,40}(?:řídí|určuje|určuješ|řídíš|vybír|volí)|(?:řídí|určuje|určuješ|řídíš)[^.!?]{0,30}(?:tempo|hloubk|ona\b|on\b|sama|sám)|až na (?:její|jeho|tvoje|tvé) slovo|dokud (?:si )?ne(?:řekne|požád|dovolí)|ona (?:tě )?navádí|on (?:tě )?navádí|nech ji, ať si|nech ho, ať si|podle (?:ní|něj)|sama (?:si )?(?:řídí|určuje|zavede|nasedá)|sám (?:si )?(?:řídí|určuje|zavede|nasedá)/i;
 
