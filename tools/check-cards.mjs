@@ -1,6 +1,7 @@
 // Kontrola dat karet: node tools/check-cards.mjs
 import { readFileSync, readdirSync } from 'node:fs';
 import vm from 'node:vm';
+import { ACTION, END, POSTURE, GOAL_RE, MIN_LEN, MAX_LEN, MIN_GOAL_SHARE } from './card-rules.mjs';
 
 const MIN = 500;
 const ctx = { window: {}, document: { createElementNS: () => ({ setAttribute() {}, set innerHTML(_v) {} }) } };
@@ -48,6 +49,7 @@ const TOYS = {
 
 let errors = 0;
 const seen = new Map();
+let goals = 0;
 const norm = t => t.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 let total = 0;
 let withPose = 0;
@@ -55,9 +57,12 @@ const poseUse = {};
 
 for (const cat of CATEGORIES) {
   const line = [`\n${cat.id}. ${cat.name}`];
+  let goalsInCat = 0;
+  let inCat = 0;
   for (const role of ['male', 'female']) {
     const list = cat[role];
     total += list.length;
+    inCat += list.length;
     if (list.length < MIN) { console.error(`CHYBA: kat ${cat.id} ${role} má jen ${list.length} karet`); errors++; }
     const places = {}; const toys = {}; let timers = 0;
     list.forEach((raw, i) => {
@@ -72,7 +77,19 @@ for (const cat of CATEGORIES) {
         else { withPose++; poseUse[base] = (poseUse[base] || 0) + 1; }
       }
       if (timer) timers++;
-      if (text.length < 15) { console.error(`CHYBA: krátký text ${cat.id}/${role}/${i}`); errors++; }
+
+      // Standard karty: konkrétní akce + měřitelný konec (viz tools/card-rules.mjs).
+      const where = `${cat.id}/${role}/${i}`;
+      if (text.length < MIN_LEN) { console.error(`CHYBA: krátký text ${where}: ${text}`); errors++; }
+      if (text.length > MAX_LEN) { console.error(`CHYBA: dlouhý text ${where} (${text.length} znaků)`); errors++; }
+      if (!ACTION.test(text)) { console.error(`CHYBA: karta neříká, co se dělá ${where}: ${text}`); errors++; }
+      const hasEnd = END.test(text) || (timer && /^[1-9]\d*$/.test(timer));
+      if (!hasEnd) { console.error(`CHYBA: karta nemá měřitelný konec ${where}: ${text}`); errors++; }
+      if (POSTURE.test(text) && !hasEnd) { console.error(`CHYBA: karta popisuje jen postoj ${where}: ${text}`); errors++; }
+      if (text.includes(' Cíl: ')) {
+        if (GOAL_RE.test(text)) goalsInCat++;
+        else { console.error(`CHYBA: cíl se nevykreslí (název je moc dlouhý nebo má interpunkci) ${where}: ${text}`); errors++; }
+      }
       const key = norm(text);
       if (seen.has(key)) { console.error(`CHYBA: duplicita ${cat.id}/${role}/${i} = ${seen.get(key)}: ${text}`); errors++; }
       else seen.set(key, `${cat.id}/${role}/${i}`);
@@ -83,12 +100,19 @@ for (const cat of CATEGORIES) {
     line.push(`        místa: ${Object.entries(places).map(([k, v]) => `${k} ${v}`).join(', ')}`);
     line.push(`        pomůcky: ${Object.entries(toys).map(([k, v]) => `${k} ${v}`).join(', ')}`);
   }
+  goals += goalsInCat;
+  const share = goalsInCat / inCat;
+  line.push(`  karet s viditelným cílem: ${goalsInCat}/${inCat} = ${(share * 100).toFixed(0)} %`);
+  if (share < MIN_GOAL_SHARE) {
+    console.error(`CHYBA: kat ${cat.id} má jen ${(share * 100).toFixed(0)} % karet s cílem (minimum ${MIN_GOAL_SHARE * 100} %)`);
+    errors++;
+  }
   console.log(line.join('\n'));
 }
 
 const unused = Object.keys(POSES).filter(id => !poseUse[id]);
 console.log(`\nPolohy: ${Object.keys(POSES).length} definovaných, ${withPose} karet má polohu v datech`);
 if (unused.length) console.log(`Nepoužité polohy: ${unused.join(', ')}`);
-console.log(`Celkem karet: ${total}`);
+console.log(`Celkem karet: ${total}, z toho ${goals} s viditelným cílem`);
 if (errors) { console.error(`\n${errors} chyb`); process.exit(1); }
 console.log('OK');

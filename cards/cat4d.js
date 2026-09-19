@@ -143,7 +143,7 @@ CATEGORIES.push({
     "Zárubeň v rukou: Chyť se zárubně dveří a nech ho milovat tě zezadu. Cíl: čtyři minuty a ani jednou se nepustit.|240|predklon_stoje!",
     "Tiše ve stoje: Miluj se s ním vestoje u zdi a ani jeden z vás nesmí vydat hlásku. Cíl: čtyři minuty úplného ticha.|240|zed",
     "Sedni si mu na klín na podlaze a nech se obejmout oběma rukama.|240|klin_podlaha",
-    "Opřená mezi jeho nohama: Sedni si mu mezi nohy zády a opři se mu o hrudník. Cíl: čtyři minuty a ani jednou se nenarovnat.|240|klin_podlaha",
+    "Opřená mezi jeho nohama: Sedni si mu mezi nohy zády, opři se mu o hrudník a pomalu se na něm houpej. Cíl: čtyři minuty a ani jednou se nenarovnat.|240|klin_podlaha",
     "Na klíně zády: Sedíš mu na klíně zády a on ti sahá dopředu. Cíl: ať tě nepřestane dráždit ani na chvíli.|300|klin_zady",
     "Nech ho sednout si na kraj postele a postav se mezi jeho nohy.|180|oral_on_vsede",
     "Nech se zvednout a držet na něm, dokud vydrží. Pak si sedněte.|180|zvednuta",

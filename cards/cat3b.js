@@ -125,7 +125,7 @@ CATEGORIES.push({
     "Hluboko a jen špička: Vezmi ho hluboko a pak zase jen špičku a takhle to střídej. Cíl: dvacet střídání a ani jedno nezrychlit.|300|oral_on_vleze",
     "Olizuj ho shora dolů, pak zdola nahoru. Pokaždé jinak silně.|240|oral_on_vleze",
     "Pohybuj rukou přesně v tempu úst. Ani o kousek jinak.|300|oral_on_vleze",
-    "Opřený dozadu: Posaď ho na kraj postele, ať se opře dozadu o ruce, a klekni si mu mezi kolena. Cíl: pět minut a nesmí se předklonit.|300|oral_on_vsede",
+    "Opřený dozadu: Posaď ho na kraj postele, ať se opře dozadu o ruce, a kuř mu vkleče. Cíl: pět minut a nesmí se předklonit.|300|oral_on_vsede",
     "Ruce pryč: Po celý úkol máš ruce složené za zády a pracuješ jen ústy. Cíl: dokázat, že to stačí.|300|oral_on_vleze",
     "Kouři mu a mezitím mu strkej palec do pusy, ať ho saje.|240|oral_on_vleze",
     "Přidávej postupně, ať jsi za pět minut z nejpomalejšího tempa na nejrychlejším.|300|oral_on_vleze",

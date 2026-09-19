@@ -35,7 +35,21 @@ každá kategorie má víc souborů se stejným `id`, které se při startu slou
 Formát karty: `"text"`, `"text|sekundy"` nebo `"text|sekundy|poloha"` (časovač smí být
 prázdný: `"text||poloha"`). Vykřičník za id polohy (`zezadu!`) prohodí role obou
 postav na obrázku – hodí se u karet, kde je v pasivní roli on. Siluety poloh jsou v `poses.js`, jejich náhled otevřete
-v `tools/poses-preview.html`. Kontrola dat:
+v `tools/poses-preview.html`.
+
+### Standard karty
+
+Každá karta musí odpovědět na tři otázky: **co se dělá** (konkrétní sloveso, ne jen
+postoj), **jak** (poloha, tempo, pravidlo) a **kdy to končí** (časovač, počet, nebo
+podmínka „dokud…“). Karta, která jen popisuje polohu, je chyba.
+
+Většina karet (v každé kategorii aspoň 60 %) má tvar **`Název: zadání. Cíl: …`**, který
+aplikace vykreslí s nadpisem a zvýrazněným cílem. Název smí mít nejvýš 40 znaků a nesmí
+obsahovat `:` `.` `!` `?`, jinak se cíl nevykreslí. Text karty má 45–200 znaků, aby se
+vešel na displej telefonu.
+
+Pravidla jsou strojově vynucená – seznam sloves a měřítek je v `tools/card-rules.mjs`,
+kontrola dat se pouští takhle:
 
 ```bash
 node tools/check-cards.mjs
