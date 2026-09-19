@@ -25,7 +25,7 @@ export const ACTION = new RegExp([
   'domluvte','vystřídejte','zahrň','dohodn',
   // svlékání, pomůcky, příprava
   'svlék','svlékej','sundej','sundá','rozepn','rozepínej','vyhrň','stáhni','vytáhni','odhrň','obleč','zuj',
-  'svaž','sváž','spouta','spoutej','přivaž','zavaž','nasaď','zapni','namaž','naolejuj','namoč','napusť',
+  'svaž','sváž','spouta','spoutej','přivaž','zavaž','nasa','zapni','houp','namaž','naolejuj','namoč','napusť',
   'nalij','kápni','omyj','připrav','přines','hoď','nastav','přivoň','pročes','přetáhni','vyjeď','zajeď','sjeď','odnes','přiveď',
   // hrubší akce
   'tlač','přitlač','táhni','tahej','plác','plácej','plácni','šlehni','šleh','zvedni','zvedej','drž','držíš','držet',
@@ -88,9 +88,11 @@ const ORAL = [
 
 // Průnik (kategorie 4).
 const PRUNIK = [
-  'miluj','milov','vnikni','vnikej','vnikne','vniknout','vniká','vnikáš','vnikl','vnikla',
+  'miluj','milov','vnik',
   'přiráž','přirážej','přirážet','příraz','přírazů','přírazy','zasouvej','zasuň','zaveď','zavede','zavedeš','zaveze',
   'jezdi','jezdí','jezdíš','jízd','jezdkyn','nasedej','nasedá','sedej si na n','posaď se na n',
+  'nasa(?:ď|dí|dit|zuj|zuješ)[^.!?]{0,30}(?:se\\b|si\\b|na (?:tebe|něj|sebe|něho))',
+  '(?:se|si)[^.!?]{0,20}nasa(?:ď|dí|dit|zuj)','houp','vpusť','pusť do sebe','pustit do sebe','zavede si','zaveď si',
   'je v tobě','jsi v ní','v ní jsi','v tobě je','zůstaň v ní','zůstaň v něm','v ní zůsta','vyklouz','bez vytažení',
   'anál','análn','análu','análem','do zadečku','do zadku','kolík','dvojit[ýáé] průnik','průnik',
   'sex\\b','sexu\\b','sexem\\b','při sexu','vezmi si ji','vezmi si ho','vezme t','ať tě vezme','mrdej','mrdá','šukej','šuká','ojeď','ojede',
