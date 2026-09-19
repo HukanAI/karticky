@@ -63,7 +63,7 @@ export const MIN_GOAL_SHARE = 0.6;
 
 // Ruce a pomůcky na konkrétním místě (kategorie 2).
 const RUKY = [
-  'hlaď','hlad','pohlaď','masíruj','namasíruj','rozmasíruj','masáž','dráždi','drážděn','škádl',
+  'hlaď','hlad','pohlaď','masíruj','namasíruj','rozmasíruj','masáž','drážd','škádl',
   'prsti','prstí','prstem','prsty','prstů','honi','honí','honit','hoň','honě','vyhoň','masturb','ruční',
   'třeš','tři\\b','rozetři','mnuj','ťukej','krouž','kroužk','kroužen','sevři','stiskni','stisk','svírej',
   'klouzej','otírej','přejeď','přejížděj','projeď','obkresl','kresli','šimrej','tahej','táhni',
