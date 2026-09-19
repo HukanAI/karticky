@@ -39,9 +39,19 @@ v `tools/poses-preview.html`.
 
 ### Standard karty
 
-Každá karta musí odpovědět na tři otázky: **co se dělá** (konkrétní sloveso, ne jen
-postoj), **jak** (poloha, tempo, pravidlo) a **kdy to končí** (časovač, počet, nebo
+Každá karta musí odpovědět na čtyři otázky: **co se dělá** (konkrétní sloveso, ne jen
+postoj), **o jaký akt jde**, **jak** (poloha, tempo, pravidlo) a **kdy to končí** (časovač, počet, nebo
 podmínka „dokud…“). Karta, která jen popisuje polohu, je chyba.
+
+Akt musí být pojmenovaný podle kategorie: kategorie 2 ruku nebo pomůcku na konkrétním
+místě, kategorie 3 orální akt, kategorie 4 průnik (`vnikni do ní`, `přirážej`,
+`jezdi na něm`, `anál`) a kategorie 5 kteroukoli z nich, případně plácání nebo bičík.
+Kategorie 1 nic navíc nepotřebuje – líbání a škádlení přes oblečení jsou samy o sobě akt.
+Karta „obtoč mu nohu kolem boku“ bez toho, co se pak děje, kontrolu neprojde.
+
+Každá karta s **análním průnikem** musí obsahovat slovo `lubrikant` a větu o tom,
+**kdo řídí tempo a hloubku** – vždycky přijímající. Slovo `anál` zároveň zapíná
+pruh se stop slovem (`SAFE_RE` v `app.js`).
 
 Většina karet (v každé kategorii aspoň 60 %) má tvar **`Název: zadání. Cíl: …`**, který
 aplikace vykreslí s nadpisem a zvýrazněným cílem. Název smí mít nejvýš 40 znaků a nesmí
