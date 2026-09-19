@@ -53,6 +53,10 @@ Každá karta s **análním průnikem** musí obsahovat slovo `lubrikant` a vět
 **kdo řídí tempo a hloubku** – vždycky přijímající. Slovo `anál` zároveň zapíná
 pruh se stop slovem (`SAFE_RE` v `app.js`).
 
+**Anál má jediný směr: dělá ho muž ženě.** Karta pro ženskou roli ji nesmí posílat
+do jeho zadku ani na prostatu – hlídá to `ANAL_NA_MUZI`. Kousnutí do půlky, hlazení
+zad a zadku ani masáž hráze zvenku sem nepatří, ty zůstávají.
+
 Většina karet (v každé kategorii aspoň 60 %) má tvar **`Název: zadání. Cíl: …`**, který
 aplikace vykreslí s nadpisem a zvýrazněným cílem. Název smí mít nejvýš 40 znaků a nesmí
 obsahovat `:` `.` `!` `?`, jinak se cíl nevykreslí. Text karty má 45–200 znaků, aby se
@@ -62,7 +66,13 @@ Pravidla jsou strojově vynucená – seznam sloves a měřítek je v `tools/car
 kontrola dat se pouští takhle:
 
 ```bash
-node tools/check-cards.mjs
+node tools/check-cards.mjs   # data karet
+node tools/check-fit.mjs     # zobrazení na malých displejích (vyžaduje Playwright)
 ```
+
+`check-fit.mjs` proměří všech 5 076 karet v opravdové `.card-front` přes headless
+Chromium na osmi velikostech displeje a hlídá, že se neposouvá karta ani stránka.
+Vyplňuje přitom i **štítky pomůcek a bezpečnostní pruh** – bez nich vychází karta
+nižší, než ve skutečnosti je, a kontrola pak hlásí nulu i tam, kde se posouvá.
 
 Po změně souborů zvyšte `VERSION` v `sw.js`, aby se aplikace v telefonech aktualizovala.
