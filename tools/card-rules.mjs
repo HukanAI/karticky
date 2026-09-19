@@ -115,7 +115,22 @@ export const ACT_BY_CAT = {
 // Anální průnik – ne kousnutí do zadečku ani masáž hráze.
 export const ANAL = /anál|análn|análu|análem|kolík|(?:vsuň|vsouvej|vnikni|vnikej|zaveď|zavede|zasuň|strč|nech .{0,20}vniknout)[^.!?]{0,40}do zade[čc]k|masíruj[^.!?]{0,30}prostat|prostat[^.!?]{0,20}(?:prstem|prst)/i;
 // Kdo řídí tempo a hloubku – u análu vždycky přijímající.
-export const ANAL_TEMPO = /(?:tempo|hloubk|rychlost)[^.!?]{0,40}(?:řídí|určuje|určuješ|řídíš|vybír|volí)|(?:řídí|určuje|určuješ|řídíš)[^.!?]{0,30}(?:tempo|hloubk|ona\b|on\b|sama|sám)|až na (?:její|jeho|tvoje|tvé) slovo|dokud (?:si )?ne(?:řekne|požád|dovolí)|ona (?:tě )?navádí|on (?:tě )?navádí|nech ji, ať si|nech ho, ať si|podle (?:ní|něj)|sama (?:si )?(?:řídí|určuje|zavede|nasedá)|sám (?:si )?(?:řídí|určuje|zavede|nasedá)/i;
+export const ANAL_TEMPO = new RegExp([
+  // „tempo/hloubku určuje ona"
+  '(?:tempo|hloubk|rychlost|stupeň)[^.!?]{0,40}(?:řídí|řídíš|určuje|určuješ|určí|určíš|vybír|vybere|volí|zvolí|rozhoduje|rozhodne)',
+  '(?:řídí|řídíš|určuje|určuješ|určí|určíš|rozhoduje)[^.!?]{0,30}(?:tempo|hloubk|rychlost|stupeň|ona\\b|on\\b|sama|sám)',
+  // „nech ji řídit / ať si to řídí"
+  'nech(?:at|te)?[^.!?]{0,15}(?:ji|ho)[^.!?]{0,25}(?:řídit|určit|určovat|rozhodovat|vést|vede|řídí|určí)',
+  'nech ji, ať si', 'nech ho, ať si',
+  // „až na její slovo / bez jejího svolení"
+  '(?:až )?na (?:její|jeho|tvoje|tvé|svoje)[^.!?]{0,20}(?:slovo|ano|pokyn|svolení|výzvu)',
+  'bez (?:jejího|jeho|tvého)[^.!?]{0,20}(?:slova|svolení|pokynu|ano)',
+  'dokud (?:si |sama |sám )?ne(?:řekne|řekneš|požád|dovolí|dovolíš|chce|budeš chtít)',
+  'dokud (?:to )?(?:sama|sám)[^.!?]{0,20}ne',
+  // „ona navádí / podle ní / sama si zavede"
+  '(?:ona|on) (?:tě )?navádí', 'podle (?:ní|něj|toho, co)',
+  '(?:sama|sám) (?:si )?(?:řídí|řídíš|určuje|určuješ|zavede|zavedeš|nasedá|nasadí|vede)',
+].join('|'), 'i');
 
 // Tvary, které do textů nepatří.
 export const BANNED = [{ re: /prstěj/i, use: 'prsti' }];
