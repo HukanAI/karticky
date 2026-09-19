@@ -128,7 +128,7 @@ CATEGORIES.push({
     "Opřený o postel: Nech ho sednout si na podlahu opřeného o postel a nasaď se na něj. Cíl: čtyři minuty a hýbat se jen boky.|240|lotos",
     "Na podlaze: Sedíte na koberci, je v tobě a oba jste opření dozadu o ruce. Cíl: čtyři minuty a udržet rovnováhu.|240|lotos",
     "Pověšená na krku: Pověs se mu na krk, obtoč ho nohama a nech ho přirážet vestoje. Cíl: vydržet nahoře aspoň tři minuty.|180|zvednuta",
-    "Přesun bez vyjití: Nech se zvednout do náruče a posadit na kraj postele, aniž by z tebe vyšel. Cíl: čtyři minuty a ani jedno přerušení.|240|kraj_postele",
+    "Přesun bez vyjití: Nech se zvednout do náruče a posadit na kraj postele, aniž by z tebe vyklouzl. Cíl: čtyři minuty a ani jedno přerušení.|240|kraj_postele",
     "Klečí před tebou: Sedni si na kraj postele, nech ho kleknout si před tebe a vniknout do tebe. Cíl: čtyři minuty a ani jednou se nezvednout.|240|kraj_postele",
     "Nohy kolem jeho pasu: Nech ho vniknout na kraji postele a dej si nohy kolem jeho pasu. Cíl: čtyři minuty přírazů a nohy nespustit.|240|kraj_postele!",
     "Roztažené kotníky: Lež na kraji postele, nech si držet kotníky roztažené a přirážet. Cíl: čtyři minuty a kotníky ti nesmí pustit.|240|kraj_postele",
