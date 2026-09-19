@@ -1,7 +1,7 @@
 // Kontrola dat karet: node tools/check-cards.mjs
 import { readFileSync, readdirSync } from 'node:fs';
 import vm from 'node:vm';
-import { ACTION, END, POSTURE, GOAL_RE, MIN_LEN, MAX_LEN, MIN_GOAL_SHARE,
+import { ACTION, END, POSTURE, GOAL_RE, MIN_LEN, MAX_LEN, MIN_GOAL_SHARE, ANAL_NA_MUZI,
          ACT_BY_CAT, ANAL, ANAL_TEMPO, BANNED } from './card-rules.mjs';
 
 const MIN = 500;
@@ -91,6 +91,10 @@ for (const cat of CATEGORIES) {
       const act = ACT_BY_CAT[cat.id];
       if (act && !act.test(text)) {
         console.error(`CHYBA: karta nepojmenuje akt ${where}: ${text}`); errors++;
+      }
+      // Anál dělá vždycky muž ženě – karta pro ni ho nesmí posílat do jeho zadku.
+      if (role === 'female' && ANAL_NA_MUZI.test(text)) {
+        console.error(`CHYBA: anál obráceně (žena muži) ${where}: ${text}`); errors++;
       }
       // U análního průniku vždycky lubrikant a kdo řídí tempo a hloubku.
       if (ANAL.test(text)) {

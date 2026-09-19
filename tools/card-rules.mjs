@@ -134,3 +134,20 @@ export const ANAL_TEMPO = new RegExp([
 
 // Tvary, které do textů nepatří.
 export const BANNED = [{ re: /prstěj/i, use: 'prsti' }];
+
+// Anál má v této hře jediný směr: dělá ho muž ženě. Karta pro ženskou roli,
+// která ji posílá do jeho zadku nebo na jeho prostatu, je chyba.
+// „Nabídni mu anál“ je v pořádku – tam anál přijímá ona.
+export const ANAL_NA_MUZI = new RegExp([
+  'prostat',
+  // „mu“ je dativ – tedy jemu. „kousni ho do zadku“ ani „nech ho vniknout do zadečku“
+  // (tam přijímá ona) se nechytí, protože tam stojí „ho“.
+  '\\bmu\\b[^.!?]{0,30}do zad(?:ku|ečku)',
+  'do zad(?:ku|ečku)[^.!?]{0,20}\\bmu\\b',
+  'namaž mu zad(?:ek|eček)',
+  '(?:vsuň|vsouvej|nasaď|zaveď|strč)[^.!?]{0,25}\\bmu\\b[^.!?]{0,30}(?:kolík|vibrátor)',
+  '(?:vsuň|vsouvej|strč)[^.!?]{0,20}\\bmu\\b[^.!?]{0,25}prst(?![^.!?]{0,20}do pusy)',
+  'kolík[^.!?]{0,30}(?:\\bmu\\b|jemu|v jeho)',
+  '(?:prsti|prstem)[^.!?]{0,20}\\bho\\b[^.!?]{0,25}zezadu',
+  '\\bho\\b zezadu[^.!?]{0,25}(?:prsti|prstem)',
+].join('|'), 'i');

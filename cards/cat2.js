@@ -322,7 +322,7 @@ CATEGORIES.push({
     "Ruka a vibrátor: Jednou rukou mu hlaď penis, druhou mu vibrátorem přejížděj po bradavkách. Cíl: dvě minuty nepřestat ani s jedním.|120",
     "Zakázaný penis: Hlaď ho dvě minuty po celém nahém těle, jen penis je zakázaný. Pak mu dej jediný dlouhý tah. Cíl: aby se u něj prohnul.|120",
     "Polštář pod boky: Podlož mu boky polštářem, klekni si mezi jeho nohy a hlaď ho oběma rukama – jednou penis, druhou mu masíruj hráz. Cíl: najít rytmus, při kterém začne nahlas dýchat.|120",
-    "Prostata zvenku: Přitlač dva prsty na jeho hráz a jemně kruž, zatímco ho druhou rukou pomalu hladíš po penisu. Cíl: zjistit, jaký tlak mu dělá nejlíp.|120",
+    "Hráz pod palci: Přitlač dva prsty na jeho hráz a jemně kruž, zatímco ho druhou rukou pomalu hladíš po penisu. Cíl: zjistit, jaký tlak mu dělá nejlíp.|120",
     "Dirigentka: Sedni si do křesla naproti posteli. On se hladí sám a ty mu říkáš, jak rychle a kde. Cíl: dirigovat ho dvě minuty, pak přijít a převzít to.|180",
     "Pračka pro něj: Posaď ho na pračku při odstřeďování, stoupni si mezi jeho kolena a hlaď ho rukou. Cíl: aby se udělal dřív, než pračka dotočí.",
     "Klouzání: Namažte se oba olejem a lehni si na něj. Klouzej po něm nahoru a dolů, jeho penis ti klouže po břiše. Cíl: dvě minuty, bez vniknutí.|120",
