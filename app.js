@@ -234,7 +234,7 @@
   function fitCard() {
     const front = $('.card-front');
     if (!front.clientHeight) return;
-    for (let step = 0; step <= 3; step++) {
+    for (let step = 0; step <= 6; step++) {
       front.dataset.fit = String(step);
       if (front.scrollHeight <= front.clientHeight + 1) return;
     }

@@ -193,9 +193,11 @@ legend { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
 .turn { text-align: center; font-size: 1.05rem; color: var(--muted); min-height: 1.5em; }
 .turn strong { color: var(--text); font-size: 1.3rem; }
 
+/* Minimum je relativní k výšce okna – na nízkém displeji se karta smí zmenšit,
+   jinak by layout přerostl okno a posouvala by se celá stránka. */
 .card {
   flex: 1;
-  min-height: 300px;
+  min-height: min(300px, 46vh);
   perspective: 1400px;
   cursor: pointer;
   outline: none;
@@ -203,7 +205,7 @@ legend { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
 .card-inner {
   position: relative;
   height: 100%;
-  min-height: 300px;
+  min-height: min(300px, 46vh);
   transition: transform 0.6s cubic-bezier(.3, .8, .3, 1);
   transform-style: preserve-3d;
 }
@@ -272,6 +274,47 @@ legend { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
 .card-front[data-fit="3"] .safe { font-size: 0.78rem; }
 .card-front[data-fit="3"] .timer { padding-top: 8px; }
 .card-front[data-fit="3"] .timer-time { font-size: 1.5rem; }
+
+/* Stupně 4 a 5 jsou pro nízké displeje, kde karta nese obrázek, časovač,
+   štítky pomůcek i bezpečnostní pruh naráz. */
+.card-front[data-fit="4"] { gap: 5px; padding: 10px 12px; }
+.card-front[data-fit="4"] .pose { height: clamp(44px, 8vh, 64px); }
+.card-front[data-fit="4"] .card-text { font-size: clamp(0.86rem, 3.5vw, 0.98rem); line-height: 1.3; }
+.card-front[data-fit="4"] .card-title { margin-bottom: 4px; font-size: 1.1em; }
+.card-front[data-fit="4"] .card-goal { margin-top: 6px; padding: 6px 8px; font-size: 0.72em; }
+.card-front[data-fit="4"] .tags { gap: 4px; }
+.card-front[data-fit="4"] .tags span { padding: 2px 6px; font-size: 0.66rem; }
+.card-front[data-fit="4"] .safe { font-size: 0.72rem; }
+.card-front[data-fit="4"] .card-cat { font-size: 0.66rem; }
+.card-front[data-fit="4"] .timer { padding-top: 6px; }
+.card-front[data-fit="4"] .timer-time { font-size: 1.3rem; }
+
+/* Poslední záchrana: silueta polohy zmizí. Uvolní přes 60 px, takže text,
+   cíl i pruh se vejdou vždycky – posouvat se karta nikdy nemusí. */
+.card-front[data-fit="5"] { gap: 5px; padding: 10px 12px; }
+.card-front[data-fit="5"] .pose { display: none; }
+.card-front[data-fit="5"] .card-text { font-size: clamp(0.86rem, 3.5vw, 0.98rem); line-height: 1.3; }
+.card-front[data-fit="5"] .card-title { margin-bottom: 4px; font-size: 1.1em; }
+.card-front[data-fit="5"] .card-goal { margin-top: 6px; padding: 6px 8px; font-size: 0.72em; }
+.card-front[data-fit="5"] .tags { gap: 4px; }
+.card-front[data-fit="5"] .tags span { padding: 2px 6px; font-size: 0.66rem; }
+.card-front[data-fit="5"] .safe { font-size: 0.72rem; }
+.card-front[data-fit="5"] .card-cat { font-size: 0.66rem; }
+.card-front[data-fit="5"] .timer { padding-top: 6px; }
+.card-front[data-fit="5"] .timer-time { font-size: 1.3rem; }
+
+/* Úplně poslední krok pro nejmenší displeje: zmizí i řádek se štítky pomůcek.
+   Pomůcky jsou pojmenované v textu karty, takže se informace neztratí. */
+.card-front[data-fit="6"] { gap: 4px; padding: 9px 12px; }
+.card-front[data-fit="6"] .pose,
+.card-front[data-fit="6"] .tags { display: none; }
+.card-front[data-fit="6"] .card-text { font-size: clamp(0.82rem, 3.4vw, 0.94rem); line-height: 1.28; }
+.card-front[data-fit="6"] .card-title { margin-bottom: 4px; font-size: 1.1em; }
+.card-front[data-fit="6"] .card-goal { margin-top: 6px; padding: 5px 8px; font-size: 0.72em; }
+.card-front[data-fit="6"] .safe { font-size: 0.7rem; }
+.card-front[data-fit="6"] .card-cat { font-size: 0.64rem; }
+.card-front[data-fit="6"] .timer { padding-top: 5px; }
+.card-front[data-fit="6"] .timer-time { font-size: 1.25rem; }
 
 .card-text {
   margin: auto 0;
