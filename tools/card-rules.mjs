@@ -8,7 +8,7 @@ export const ACTION = new RegExp([
   // ruce, doteky
   'hlaď','hlad\\b','hlazen','masíruj','masáž','namasíruj','tři\\b','třeš','rozetři','přejeď','přejížděj',
   'opisuj','obcházej','kresli','nakresli','piš\\b','napiš','krouži','kroužkuj','kroužen','zakruť',
-  'drážd','škádl','šimrej','prstěj','prstěn','honi','honě','hoň','kmitej','klouzej','otírej','jeď','jezdi',
+  'drážd','škádl','šimrej','prsti','prstěj','prstěn','honi','honě','hoň','kmitej','klouzej','otírej','jeď','jezdi',
   'dotýkej','dotkni','dotknout','sáhni','sahej','chyť','sevři','stisk','tiskni','přitisk','přitáhni','objímej','obejmi',
   'dej\\b','dávej','dáš\\b','podlož','přilož','přikládej','přiklop','pokládej','polož','nabídni','vem\\b','vezmi','ber\\b','bereš','použij','použijte',
   // sex, pohyb
@@ -64,7 +64,7 @@ export const MIN_GOAL_SHARE = 0.6;
 // Ruce a pomůcky na konkrétním místě (kategorie 2).
 const RUKY = [
   'hlaď','hlad','pohlaď','masíruj','namasíruj','rozmasíruj','masáž','dráždi','drážděn','škádl',
-  'prsti','prstí','prstem','prsty','prstů','honi','hoň','honě','vyhoň','masturb','ruční',
+  'prsti','prstí','prstem','prsty','prstů','honi','honí','honit','hoň','honě','vyhoň','masturb','ruční',
   'třeš','tři\\b','rozetři','mnuj','ťukej','krouž','kroužk','kroužen','sevři','stiskni','stisk','svírej',
   'klouzej','otírej','přejeď','přejížděj','projeď','obkresl','kresli','šimrej','tahej','táhni',
   'vibrátor','vibrac','vibruj','kroužk[eu]m','pírk','štětc','štětec','žínk','ledem','kostk','olej','naolejuj','namaž','lubrik',
@@ -95,7 +95,7 @@ const PRUNIK = [
   '(?:se|si)[^.!?]{0,20}nasa(?:ď|dí|dit|zuj)','houp','vpusť','pusť do sebe','pustit do sebe','zavede si','zaveď si',
   'je v tobě','jsi v ní','v ní jsi','v tobě je','zůstaň v ní','zůstaň v něm','v ní zůsta','vyklouz','bez vytažení',
   'anál','análn','análu','análem','do zadečku','do zadku','kolík','dvojit[ýáé] průnik','průnik',
-  'sex\\b','sexu\\b','sexem\\b','při sexu','vezmi si ji','vezmi si ho','vezme t','ať tě vezme','mrdej','mrdá','šukej','šuká','ojeď','ojede',
+  'sex\\b','sexu\\b','sexem\\b','při sexu','vezmi si ji','vezmi si ho','vezme t','ať tě vezme','mrd','šuk','ojeď','ojed','ojet',
 ];
 
 // Plácání, bičík, svazování se stimulací (jen kategorie 5).
